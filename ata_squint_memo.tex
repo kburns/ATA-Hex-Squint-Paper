@@ -1,0 +1,65 @@
+\documentclass[preprint]{aastex}
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{fullpage}
+
+\begin{document}
+\title{Characterizing Beam Size and Squint at the ATA}
+\author{Keaton J. Burns, Peter Williams, Geoffrey Bower \\ \today}
+
+\begin{abstract}
+We present a study of primary beam size and squint, the vector difference between the X and Y polarization pointing centers of a telescope, in the antennas and feeds at the Allen Telescope Array (ATA), based on weekly Hex-7 observations since STARTDATE \footnote{INSERT CORRECT DATE HERE}.  A relational database of beam parameters was created, which reduces the results of an upgraded and automated hex analysis pipeline.  A Python visualization tool was developed to efficiently interface with the squint database and search for correlations in this large dataset.  We find that...
+\end{abstract}
+
+%% To Do %%
+%
+%
+
+\tableofcontents
+
+\section{Introduction}\label{s.intro}
+ATA telescope calibrations are accomplished through observing known radio point sources to determine the system temperature, pointing centers, and beam shape for each antenna.  One parameter of interest from these observations is telescope squint, which describes the offset of the Y polarization pointing center from the X polarization pointing center, in azimuth and altitude.  Knowledge of each telescope's squint is useful for assessing the reliability of data from each polarization based on each telescope's pointing model (i.e. for large-squint telescopes, pointing the telescope based on its X polarization pointing center results in useful X polarization data but unreliable Y polarization data). Studying telescope squint also provides insights into the strengths and limitations of the ATA telescope design, and may be useful for directing future feed development.  Our aims in this project included isolating the cause of the squint to the feed or dish, studying the effects of feed upgrades on the squint, and assessing the stability of a telescope's squint with changes in frequency and time.
+
+\section{Data Collection}\label{s.datacollection}
+
+\subsection{Hex7 Observations}\label{ss.observations}
+The Hex-7 observing routine consists of a central pointing at a known radio point source and six pointings in a hexgonal pattern at a radius of 2000 arcseconds, and are generally completed once each week.  The measurements are recorded for each antenna and polarization (antpol). Observations have most often been taken using two correlators at 700 \& 1430, 2009 \& 3140, and 5000 \& 7600 MHz, with the focus set for the higher of each pair of frequencies.  Each of these three observations takes roughly 18 minutes \footnote{CITE 2011 Q1 HEX PROP}. We expect data at 1430 and 3140 MHz to be the most accurate, since these observations are the most numerous and were in focus. The radio point-sources 3c48, 3c138, 3c147, and 3c286 have been used.
+
+\subsection{Data Reduction}\label{ss.reduction}
+Part of the Hex-7 data reduction includes fitting a two-dimensional Gaussian function to the relative gains at each of the seven pointings for each antpol and frequency.  This procedure provides a measurement of the actual primary beam of the telescope with respect to the contemporary pointing model.  For each telescope and frequency, an automated reduction pipeline calculated the center position and width of the best-fitting 2d Gaussian and the respective uncertainties.  The reduced Chi-squared value of the fit and the system equivalent flux density (SEFD) for each antpol were also calculated.
+
+\section{Data Analysis}\label{s.analysis}
+
+\subsection{Beam Parameter Database}\label{ss.database}
+Describe database buildup, operation, code
+flagging
+
+\subsection{Visualization}\label{ss.visualization}
+Briefly describe visualization routines
+
+\section{Results}\label{s.results}
+
+\subsection{Primary Beam Size}\label{ss.beamsize}
+Results of primary beam size, compare to Harp 2011\cite{Harp2011}.
+Compare distribution to Hull 2010\cite{Hull2010}.
+
+\subsection{Squint: Temporal Variation}\label{ss.temporal}
+
+\subsection{Squint: Feed vs. Antenna}\label{ss.antfeed}
+
+\subsection{Squint: Effects of Feed Revisions}\label{ss.revisions}
+
+\subsection{Squint: Frequency Dependence}\label{ss.freq}
+To study the effects of frequency on squint, for each antfeed, we calculated the median squint magnitude, across all observing runs, at each observing frequency.  We then performed a linear least-squares fit on the log of the magnitude and the log of the frequency; the slope of this fit represents the best fitting power-law index $x$, assuming $|\vec{S}| \propto f^x$.
+
+OR
+
+To study the effects of frequency on squint, for each antfeed, we performed a linear least-squares fit on the log of squint magnitude and the log of frequency for each observing run.  The slope of this fit represents the best fitting power-law index $x$, assuming $|\vec{S}| \propto f^x$.  We then took the median power-law index across all observing runs for each antfeed.
+
+The best fitting linear slope was similarly computed for each antfeed (fitting squint magnitude to frequency, assuming a power-law index of 1).  Histograms of these indices and slopes are displayed in figure NEEDREF.  The same plots were generated with the data separated by feed revision.  We notice substantial spread in the power-law indices, mainly between 0 and -2.  We note that the data for for feed revision 3 show less spread (0 to -1) than the other revisions.
+
+\section{Conclusions}\label{s.conclusions}
+
+\bibliographystyle{plain}
+\bibliography{ATA.bib}
+
+\end{document}
