@@ -48,57 +48,101 @@ stability of a telescope's squint with changes in frequency and time.
 %%%%%
 \section{Observations}\label{s.observations}
 
-Measurements of primary beam shape and squint were obtained by weekly
-observations of bright, compact sources from 2009~Oct~17 to
+Measurements of primary beam (PB) shape and squint were obtained by
+weekly observations of bright, compact sources from 2009~Oct~17 to
 2011~Apr~06. The core observing pattern in each session consisted of
 an observation pointed directly at the source followed by a small
 mosaic of pointings offset from the source by an angle comparable to
-half of the nominal primary beam full-width at half maximum
-(FWHM). Each pointing lasted for 60--90 seconds. In the significant
-majority of cases, six additional observations were made, with the
+half of the nominal PB full-width at half maximum (FWHM). Each
+pointing lasted for 60--90 seconds, with a typical pattern taking
+about 20 minutes to observe (including overheads). In the significant
+majority of cases, the small mosaic consisted of six additional
 pointings arranged in a equilateral hexagon around the central
 source. Two points of the hexagon were on a line of constant
 declination matching that of the source and the distance between
-pointings was exactly half of the nominal primary beam FWHM. Other
-pointing patterns, such as crosses or nested hexagons, and other
-offset sizes, such as one quarter of the FWHM, were occasionally used.
-The sources 3C\,48, 3C\,138, 3C\,147, and 3C\,286 were used as
-targets, with the selection depending on visibility and
-higher-elevation sources being preferred.
+pointings was exactly half of the nominal PB FWHM. Other pointing
+patterns, such as crosses or nested hexagons, and other offset sizes,
+such as one quarter of the FWHM, were occasionally used.  The sources
+3C\,48, 3C\,138, 3C\,147, and 3C\,286 were used as targets, with the
+selection depending on visibility and higher-elevation sources being
+preferred.
 
 At the time of the observations, the ATA had two independently-tunable
 correlators able to access any central frequency within the facility's
 overall accessible band, 0.5--11~GHz. Each observing session included
-several cycles of the observing pattern with the correlators tuned to
+several cycles of observing patterns with the correlators tuned to
 several pairs of frequencies. Most observations were made with paired
 central frequencies of 0.7 \& 1.43, 2.01 \& 3.14, or 5.00 \&
 7.60~GHz. Each correlator had a bandwidth of 104~MHz divided into 1024
 spectral channels.
 
-Because the position of the focal point of the ATA optical systems is
-wavelength-dependent, each ATA feed is mounted on a piston that
-allows repositioning of the feed for optimal match to one of the
-observing frequencies. Feed performance degrades for frequencies above
-the commanded ``focus frequency'' while it is fairly stable for those
-below it \citep{Harp2011}. In the hex observations the focus was
-always set to be optimal for the higher of each pair of observing
+Because the position of the focal point of the ATA optical path is
+wavelength-dependent, each ATA feed is mounted on a piston that allows
+repositioning of the feed for optimal match to one of the observing
+frequencies. Feed performance degrades for frequencies above the
+commanded ``focus frequency'' while it remains fairly good for those
+below it \citep{Harp2011}. In these observations the focus was always
+set to be optimal for the higher of each pair of observing
 frequencies.
 
 \section{Data Reduction}\label{s.reduction}
-Part of the data reduction includes fitting a two-dimensional Gaussian
-function to the relative gains at each of the seven pointings for each
-antpol.  This procedure provides a measurement of the actual primary
-beam of the telescope at the observed frequency with respect to the
-contemporary pointing model.  The center and width uncertainties, the
-reduced $\chi^2$ value of the fit and the system equivalent flux
-density (SEFD) for each antpol were also calculated.
 
-The reduced beam parameters from all runs were imported into a
-relational database for analysis.  A query program use the Structured
-Query Language (SQL) to retrieve and plot data with arbitrary
-filtering and transformation of the underlying values. Derived data
-such as squint magnitudes and angles, and their respective
-uncertainties, are computed during retrieval.
+After each observing session the data were reduced with an automated
+pipeline. The observation of the central pointing of each observing
+pattern was automatically flagged for radiofrequency interference
+(RFI) and gain- and bandpass-calibrated using the COMPASS system
+developed for the ATA \citep{Keating2010}. The rest of the scans were
+likewise automatically flagged and had the calibrations from the
+central pointing applied. Some scans were discarded due to excessive
+RFI or problems in digital hardware; if the central pointing was
+discarded, the whole pointing pattern was as well.
+
+Each ATA feed is sensitive to two orthogonal linear polarizations, $X$
+(horizontal relative to ground) and $Y$ (vertical). Only parallel-hand
+correlations were processed, so that the $X$ and $Y$ correlations were
+effectively reduced independently. We refer to the signal originating
+from a particular polarization on a particular antenna as coming from
+a certain ``antpol''. In some antennas, only one antpol was
+correlated.
+
+After initial calibrations were applied, the MIRIAD \citep{Sault1995}
+task \textsf{selfcal} was used on each side pointing to derive complex
+correction gains for each antpol. An additional program was written to
+determine uncertainties in the solved-for gains, which are not
+reported by \textsf{selfcal}. Because the received flux in all fields
+is dominated by the central calibrator source, these gains can be
+interpreted as the inverse of the complex PB response associated with
+each antpol in the direction of the calibrator, where the response
+towards pointing center is unity. These gains may vary between antpols
+on the same antenna due to differences in the spatial response of the
+$X$ and $Y$ receptors or polarization leakage in the overall optical
+path.
+
+Two-dimensional (2D) Gaussian profiles in azimuth-elevation (az-el)
+space were fit to the measurements of each antpol in each pointing
+pattern. Because the pointing patterns on the sky were aligned to the
+equatorial coordinate system, the az-el offsets probed varied as a
+function of parallactic angle and did not trace out precisely uniform
+figures. Each Gaussian fit had five free parameters: offsets in
+azimuth and elevation from pointing center; characteristic widths in
+azimuth and elevation; and an overall amplitude scaling. The fits
+resulted in measurements of these parameters, their formal
+uncertainties, and a reduced $\chi^2$ value for the overall
+result. Other data products of the pipeline included the relative
+complex gain values, post-hoc measurements of the system equivalent
+flux density (SEFD) for each antpol, and images of the central
+pointings.
+
+\subsection{Squint Database}\label{ss.database}
+The Gaussian fit parameters from all runs were imported into a
+relational database for analysis. For those antennas for which data
+from both polarizations were available, squint vectors were calculated
+as defined in \S\ref{s.intro}.
+
+A query program use the Structured Query Language (SQL) to retrieve
+and plot data with arbitrary filtering and transformation of the
+underlying values. Derived data such as squint magnitudes and angles,
+and their respective uncertainties, are computed during retrieval.
 
 \subsection{Outlier Removal}\label{ss.outliers}
 A mechanism was implemented to exclude bad data from downstream
@@ -143,7 +187,7 @@ these data, 1309 observations remained.
 \section{Analysis and Results}\label{s.results}
 
 \subsection{Primary Beam Size}\label{ss.beamsize}
-Scatterplots depicting the primary beam shape (best-fit 2D Gaussian
+Scatterplots depicting the PB shape (best-fit 2D Gaussian
 elevation width vs azimuthal width) for the X and Y polarizations are
 depicting in Figures~\ref{fig.x_widths} and \ref{fig.y_widths}
 respectively, and Table \ref{tab.widths} gives the means and standard
