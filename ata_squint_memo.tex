@@ -24,31 +24,115 @@ for correlations in this large dataset.  We find that \ldots
 
 %%%%%
 \section{Introduction}\label{s.intro}
-Yadda yadda Allen Telescope Array \citep[ATA;][]{Welch2009}.
 
-ATA telescope calibration is accomplished through observing known
-radio point sources to determine the system temperature, pointing
-centers, and beam shape for each antenna.  One parameter of interest
-from these observations is telescope squint, which we define as the
-offset of the Y polarization pointing center from the X polarization
-pointing center, in azimuth and altitude.  Knowledge of each
-telescope's squint is useful for assessing the reliability of data
-from each polarization based on each telescope's pointing model
-(e.g., for large-squint telescopes, pointing models based on X
-polarization pointing centers yield suboptimal Y polarization
-data). Studying telescope squint also provides insights into the
-strengths and limitations of the offset-Gregorian dish and
-log-periodic feed designs used at the ATA, and may be useful for
-directing future telescope development.  Our aims in this project
-included isolating the cause of the squint to the feed or dish,
-studying the effects of feed upgrades on the squint, and assessing the
-stability of a telescope's squint with changes in frequency and time.
+A common theme in the design of new and upgraded radio interferometers
+is an emphasis on high survey throughput. Some undertakings, such as
+the Apertif project at the Westerbork Synthesis Radio Telescope
+\citep{theapertif} and the Australian Square Kilometer Array (SKA)
+Pathfinder \citep[ASKAP;][]{theaskap}, achieve this by using
+multi-element receivers on relatively few dishes. Others, such as the
+Allen Telescope Array \citep[ATA;][]{Welch2009} and MeerKAT, the South
+African SKA pathfinder \citep{themeerkat}, use ``large number of small
+dishes'' (LNSD) array architectures to simultaneously attain good
+sensitivity and large fields of view. Long-wavelength arrays, such as
+the Precision Array for Probing the Epoch of Reionization
+\citep[PAPER;][]{thepaper}, the Long Wavelength Array
+\citep[LWA;][]{thelwa}, the Low-Frequency Array
+\citep[LOFAR;][]{thelofar}, and the Murchison Wide-field Array
+\citep[MWA;][]{themwa} take the LNSD paradigm to an extreme and have
+designs calling for hundreds or thousands of dipoles that can be used
+to image substantial fractions of the visible sky instantaneously.
 
+These arrays are intended to produce accurate wide-field images of the
+sky using either the mosaicking of many pointings or elements with
+broad response patterns. In either case, an good understanding of the
+receiving elements' response patterns is vital to the imaging process:
+it has been shown that when imaging extended structures, small
+($\sim$$10^{-2}$) inaccuracies in the response pattern model can have
+enormous ($\sim$$10^2$) effects on image fidelity \citep{chu93,wc08},
+and accurate response pattern modeling is also needed for correct
+imaging of compact sources sitting between mosaic pointings.
+
+Variation among array elements complicates matters. The most demanding
+interferometric imaging applications already require substantial
+calibration of per-element direction-dependent effects
+\citep{bcgu08,ns10}. With the large numbers of elements in new
+interferometers, more extreme outliers in the statistical variation
+inherent in the manufacturing process will be encountered, and there
+will be significant pressure to minimize per-element manufacturing
+costs. In SKA-scale efforts \citep{theska}, with thousands of array
+elements, budgetary realities will dictate that manufacturing
+tolerances be as loose as they possibly can be without compromising
+core scientific requirements. As such, it is vital to be able to
+accurately characterize the response patterns of interferometric
+elements and the effect that variations among these have upon the
+overall scientific performance of an array.
+
+In this work, we present a technique for measuring the response
+pattern characteristics of the elements in an interferometer and
+describe our implementation of it at the ATA. Our technique requires
+pointable elements, and as such we couch our discussion in terms of
+the primary beam (PB) shape of each element. A small mosaic of
+pointings around a bright, compact calibrator is observed, with the
+mosaic spacings approximately equal to the expected PB half-width at
+half maximum (HWHM) of the array elements. Self-calibration
+\citep{pr84} is used to derive relative per-element gains for the
+offset pointings. If the calibrator dominates the observed flux, these
+gains sample the PB response in particular off-axis directions, and
+parametric models can be fit to these measurements to assess
+properties such as PB HWHM and pointing offsets. An advantage of this
+approach is that in a dual-polarization receiver system, the PB
+properties of each polarization can be determined separately.
+
+This paper continues a series of investigations of PB characterization
+performed using the Allen Telescope Array. Analytical models of the
+ATA PB based on the optical design are presented in \citet{wd04}. In
+\citet{Hull2010}, independent images of mosaic pointings were used to
+measure the aggregate PB of the entire array, with good agreement with
+the theoretical predications. \citet{Harp2011} used holography to
+perform extremely detailed measurements of the beam patterns of
+specific array elements and analyze their dependence on factors such
+as solar illumination, observing frequency, and the position of the
+ATA's focusable feeds. The information provided by the technique
+presented herein is much less detailed than what can be achieved with
+the techniques of \citet{Harp2011}, but the necessary observations can
+be performed in minutes rather than days, and thus our technique can
+feasibly be used to monitor array performance. Unlike the method of
+\citet{Hull2010}, our technique requires special observations, but
+because it does not operate in the image domain, we can investigate PB
+characteristics on an element-by-element basis rather than in the
+aggregate.
+
+We begin by describing the observations used to perform the PB
+characterization (\S\ref{s.observations}). We then describe the
+analysis technique used to extract PB information
+(\S\ref{s.reduction}). Next, we present results describing the PB
+sizes and polarization-based pointing offsets in the ATA
+(\S\ref{s.results}). \ldots Finally, we present our conclusions
+(\S\ref{s.conclusions}).
+
+%ATA telescope calibration is accomplished through observing known
+%radio point sources to determine the system temperature, pointing
+%centers, and beam shape for each antenna.  One parameter of interest
+%from these observations is telescope squint, which we define as the
+%offset of the Y polarization pointing center from the X polarization
+%pointing center, in azimuth and altitude.  Knowledge of each
+%telescope's squint is useful for assessing the reliability of data
+%from each polarization based on each telescope's pointing model
+%(e.g., for large-squint telescopes, pointing models based on X
+%polarization pointing centers yield suboptimal Y polarization
+%data). Studying telescope squint also provides insights into the
+%strengths and limitations of the offset-Gregorian dish and
+%log-periodic feed designs used at the ATA, and may be useful for
+%directing future telescope development.  Our aims in this project
+%included isolating the cause of the squint to the feed or dish,
+%studying the effects of feed upgrades on the squint, and assessing the
+%stability of a telescope's squint with changes in frequency and time.
 
 %%%%%
 \section{Observations}\label{s.observations}
 
-Measurements of primary beam (PB) shape and squint were obtained by
+Measurements of PB shape and squint were obtained by
 weekly observations of bright, compact sources from 2009~Oct~17 to
 2011~Apr~06. The core observing pattern in each session consisted of
 an observation pointed directly at the source followed by a small
