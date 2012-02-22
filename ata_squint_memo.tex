@@ -45,7 +45,7 @@ to image substantial fractions of the visible sky instantaneously.
 
 These arrays are intended to produce accurate wide-field images of the
 sky using either the mosaicking of many pointings or elements with
-broad response patterns. In either case, an good understanding of the
+broad response patterns. In either case, a good understanding of the
 receiving elements' response patterns is vital to the imaging process:
 it has been shown that when imaging extended structures, small
 ($\sim$$10^{-2}$) inaccuracies in the response pattern model can have
@@ -218,10 +218,9 @@ flux density (SEFD) for each antpol, and images of the central
 pointings.
 
 \subsection{Squint Database}\label{ss.database}
-The Gaussian fit parameters from all runs were imported into a
-relational database for analysis. For those antennas for which data
-from both polarizations were available, squint vectors were calculated
-as defined in \S\ref{s.intro}.
+For those antennas for which data from both polarizations were available, 
+Gaussian fit parameters and squint vectors (calculated as defined in 
+\S\ref{s.intro}) were imported into a relational database for analysis.
 
 A query program use the Structured Query Language (SQL) to retrieve
 and plot data with arbitrary filtering and transformation of the
@@ -232,7 +231,7 @@ and their respective uncertainties, are computed during retrieval.
 A mechanism was implemented to exclude bad data from downstream
 analyses.  To remove bad observations, and particularly poor reduction
 fits, observations with frequency-normalized squint or width
-components in the top percentile, or uncertainties above the
+components above the 99$^\textrm{th}$ percentile, or uncertainties above the
 98$^\textrm{th}$ percentile, were flagged as outliers.  Observations
 above the 98$^\textrm{th}$ percentile of SEFD and the 90$^\textrm{th}$
 percentile of the Gaussian fit $\chi^2$ value were also flagged.  The
@@ -241,13 +240,10 @@ direct indicator of the convergence of the Gaussian fits, and there
 were a significant number of outliers in this parameter, as shown in
 Fig.~\ref{fig.dist_sumchisq}.
 
-Nearly all observations at 700 MHz, the lowest observed frequency,
+Over half of the observations at 700 MHz, the lowest observed frequency,
 were flagged under these conditions, so the remaining observations
-were also excluded.  Additionally, data at 3140 MHz revealed a strong
-beam size and shape dependence on the observed source, seemingly
-caused by source confusion, prompting us to discard all but the 3c48
-observations (see Fig.~\ref{fig.source_confusion}). After removal of
-these data, 1309 observations remained.
+were also excluded.  After removal of
+these data, 5040 observations remained.
 
 \begin{figure}[htb]
 \begin{center}
@@ -255,14 +251,6 @@ these data, 1309 observations remained.
 \caption{Top: Distribution of $\chi^2$ values for 2D Gaussian primary
   beam fits across all observations.  Bottom: Zoom-in at outlier
   cutoff at the 90$\textrm{th}$ percentile. \label{fig.dist_sumchisq}}
-\end{center}
-\end{figure}
-
-\begin{figure}[htb]
-\begin{center}
-\includegraphics[width=0.8\textwidth]{images/source_confusion}
-\caption{Source confusion in 3140 MHz observations.  Source 3c48 used
-  for analysis. \label{fig.source_confusion}}
 \end{center}
 \end{figure}
 
