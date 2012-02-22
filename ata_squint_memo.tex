@@ -259,39 +259,53 @@ these data, 5040 observations remained.
 \section{Analysis and Results}\label{s.results}
 
 \subsection{Primary Beam Size}\label{ss.beamsize}
-Scatterplots depicting the PB shape (best-fit 2D Gaussian
-elevation width vs azimuthal width) for the X and Y polarizations are
-depicting in Figures~\ref{fig.x_widths} and \ref{fig.y_widths}
-respectively, and Table \ref{tab.widths} gives the means and standard
+The PB shape distributions for the X and Y polarizations are depicted in 
+Figures~\ref{fig.x_shape} and \ref{fig.y_shape}, respectively.  The beam size 
+is given by the frequency normalized geometric mean of the azimuthal and 
+elevation beam diameters.  The beam angle is arctangent of the elevation 
+width divided by the azimuthal width (a $45\degr$ beam angle therefore 
+corresponds to a circular beam and is indicated by a red line in the plots; a 
+higher angle corresponds to a thin beam, and a smaller angle corresponds 
+to a flattened beam).
+
+Table \ref{tab.beamshape} gives the means and standard
 deviations of these values.  We find general agreement with the
 approximate results of \citet{Harp2011}, namely $\textrm{FWHM} \approx
-3.5^{\circ} / f_\textrm{GHz}$.
+3.5\degr / f_\textrm{GHz}$, indicated by a red line in the plots.  We find 
+that the Y polarization beams are generally round, with a mean beam angle 
+lying 0.12 standard deviations from $45\degr$.  The X polarization beams 
+show a systematic stretch in elevation, with a mean beam angle 1.11 
+standard deviations above $45\degr$.
 
 \begin{table}[htb]
 \begin{center}
 \begin{tabular}{cccc}
-Polarization & Direction & Mean [$^{\circ} / f_\textrm{GHz}$] & St. Dev \\
+Parameter & Polarization & Mean & St. Dev \\
 \hline
-X & El & 3.663 & 0.245 \\
-X & Az & 3.443 & 0.216 \\
-Y & El & 3.568 & 0.331 \\
-Y & Az & 3.568 & 0.303
+%X & El & 3.663 & 0.245 \\
+%X & Az & 3.443 & 0.216 \\
+%Y & El & 3.568 & 0.331 \\
+%Y & Az & 3.568 & 0.303
+Beam Size $[\degr / f_\textrm{GHz}]$ & X & 3.512(2) & 0.158 \\
+                                                             & Y & 3.517(2) & 0.176 \\ \hline
+Beam Angle $[\degr]$ & X & 46.54(2) & 1.39 \\
+                                     & Y & 45.19(2) & 1.59
 \end{tabular}
-\caption{Best-fit primary beam width averages \label{tab.widths}}
+\caption{Determined primary beam shape averages \label{tab.beamshape}}
 \end{center}
 \end{table}
 
 \begin{figure}[htb]
 \begin{center}
-\includegraphics[width=0.8\textwidth]{images/x_widths}
-\caption{X polarization primary beam widths. \label{fig.x_widths}}
+\includegraphics[width=0.8\textwidth]{images/x_magangle}
+\caption{Scatterplot and logarithmic histograms of determined X polarization primary beam sizes and angles. \label{fig.x_shape}}
 \end{center}
 \end{figure}
 
 \begin{figure}[htb]
 \begin{center}
-\includegraphics[width=0.8\textwidth]{images/y_widths}
-\caption{Y polarization primary beam widths. \label{fig.y_widths}}
+\includegraphics[width=0.8\textwidth]{images/y_magangle}
+\caption{Scatterplot and logarithmic histograms of determined Y polarization primary beam sizes and angles. \label{fig.y_shape}}
 \end{center}
 \end{figure}
 
@@ -306,16 +320,18 @@ To study the effects of frequency on squint, for each antfeed, we
 performed a linear least-squares fit on the log of squint magnitude
 and the log of frequency for each observing run.  The slope of this
 fit represents the best fitting power-law index $\alpha$, assuming
-$|\vec{S}| \propto f^\alpha$.  We then took the median power-law index
-across all observing runs for each antfeed.
+$|\vec{S}| \propto f^\alpha$.  Power law indices greater than 5 in absolute 
+value were discarded as outliers (22 of the 1256 measurements).
 
-The best fitting linear slope was similarly computed for each antfeed
-(fitting squint magnitude to frequency, assuming a power-law index of
-1).  Histograms of these indices and slopes are displayed in figure
-NEEDREF.  The same plots were generated with the data separated by
-feed revision.  We notice substantial spread in the power-law indices,
-mainly between 0 and -2.  We note that the data for for feed revision
-3 show less spread (0 to -1) than the other revisions.
+Histograms of the remaining indices for each feed revision are displayed in 
+Fig.~\ref{fig.powerlaws}.  We notice substantial spread in the power-law indices, with means between -0.5 and -1.0, and standard deviations near 1.0 for each feed revision.  In particular, the difference in the means between revisions are several times smaller than the standard deviations within each revision. We are therefore unable to discern any improvement in squint scaling across feed revisions.
+
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{images/powerlaw_rev}
+\caption{Best-fit power law indexes of squint magnitude as a function of frequency, for each ant feed and observing day, separated by feed revision. \label{fig.powerlaws}}
+\end{center}
+\end{figure}
 
 %%%%%
 \section{Conclusions}\label{s.conclusions}
