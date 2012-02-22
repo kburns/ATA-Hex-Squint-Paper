@@ -310,6 +310,14 @@ Beam Angle $[\degr]$ & X & 46.54(2) & 1.39 \\
 \end{figure}
 
 \subsection{Squint: Temporal Variation}\label{ss.temporal}
+The temporal stability of telescope squint is an important factor in determining the required cadence of pointing calibrations.  For each ant feed and frequency, we took the standard deviation of squint magnitude over time, and normalized to the mean squint magnitude across the same dataset.  This measurement represents the relative instability of squint magnitude for a given ant feed and frequency.  Histograms of these fractional standard deviations for each feed revision are displayed in Fig.~\ref{fig.squint_time}.  The successive revisions appear to improve squint stability, with the average fractional standard deviations decreasing from 0.44 to 0.35 from the first to third revisions.  However, the sample sizes for these measurements are relatively small: 135, 75, and 49 for the respective revisions.  
+
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{images/squinttime_rev}
+\caption{Normalized standard deviations of squint magnitude over time, for each antfeed and frequency, separated by feed revision. \label{fig.squint_time}}
+\end{center}
+\end{figure}
 
 \subsection{Squint: Feed vs. Antenna}\label{ss.antfeed}
 
@@ -329,7 +337,7 @@ Fig.~\ref{fig.powerlaws}.  We notice substantial spread in the power-law indices
 \begin{figure}[htb]
 \begin{center}
 \includegraphics[width=0.8\textwidth]{images/powerlaw_rev}
-\caption{Best-fit power law indexes of squint magnitude as a function of frequency, for each ant feed and observing day, separated by feed revision. \label{fig.powerlaws}}
+\caption{Best-fit power law indexes of squint magnitude as a function of frequency, for each antfeed and observing day, separated by feed revision. \label{fig.powerlaws}}
 \end{center}
 \end{figure}
 
