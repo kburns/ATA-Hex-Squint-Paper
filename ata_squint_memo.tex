@@ -4,23 +4,39 @@
 \usepackage[colorlinks,urlcolor=blue,citecolor=blue,linkcolor=blue]{hyperref}
 
 \slugcomment{Draft: \today}
-\shorttitle{ATA Beam Squint}
+\shorttitle{Rapid Primary Beam Characterization}
 \shortauthors{Burns et al.}
 
 \begin{document}
-\title{Characterizing Beam Size and Squint at the ATA}
-\author{Keaton J. Burns, Peter K. G. Williams, \and Geoffrey C. Bower}
+\title{Rapid Characterization of the Primary Beam Properties of
+  Pointable Interferometric Array Elements}
+\author{Keaton J. Burns, Peter K.~G. Williams, Geoffrey C. Bower}
+\affil{Department of Astronomy, B-20 Hearst Field Annex~\#~3411,
+  University of California, Berkeley, CA 94720-3411, USA}
+\email{kburns@berkeley.edu}
 
 \begin{abstract}
-We present a study of primary beam size and squint in the antennas and
-feeds at the Allen Telescope Array, based on weekly calibrator
-observations in small mosaicked patterns. A relational database of
-beam parameters was created, which reduces the results of an upgraded
-and automated analysis pipeline.  A Python visualization tool was
-developed to efficiently interface with the squint database and search
-for correlations in this large dataset.  We find that \ldots
+  High-fidelity wide-field interferometric imaging requires a precise
+  understanding of the response patterns of the interferometric array
+  elements. We present a technique for characterizing these patterns
+  using a small mosaic of short observations around a bright,
+  unresolved source. We describe the deployment of this technique at
+  the Allen Telescope Array (ATA) and analyze measurements collected
+  over a span of 17~months of routine observations. Our particular
+  emphases are the individual beam shapes of the antennas, as modeled
+  by two-dimensional Gaussians, and the ``squints,'' the separation
+  between the effective pointing centers of the orthogonal linear
+  polarizations received simultaneously by the ATA feeds. While the
+  mean vertical polarization beam is round, we measure a small
+  elevation elongation in the mean horizontal polarization beam, which
+  we attribute to \textbf{clever explanation}. Although the squints
+  display complex frequency-dependent behavior, there is generally a
+  trend towards smaller squints at higher observing frequencies,
+  indicating \textbf{other explanation}. Several revisions to the feed
+  design reduced the typical squint magnitude and variability.
 \end{abstract}
 
+\keywords{Astronomical Instrumentation -- Astronomical Techniques}
 
 %%%%%
 \section{Introduction}\label{s.intro}
@@ -51,7 +67,7 @@ it has been shown that when imaging extended structures, small
 ($\sim$$10^{-2}$) inaccuracies in the response pattern model can have
 enormous ($\sim$$10^2$) effects on image fidelity \citep{chu93,wc08},
 and accurate response pattern modeling is also needed for correct
-imaging of compact sources sitting between mosaic pointings.
+imaging of unresolved sources sitting between mosaic pointings.
 
 Variation among array elements complicates matters. The most demanding
 interferometric imaging applications already require substantial
@@ -73,7 +89,7 @@ pattern characteristics of the elements in an interferometer and
 describe our implementation of it at the ATA. Our technique requires
 pointable elements, and as such we couch our discussion in terms of
 the primary beam (PB) shape of each element. A small mosaic of
-pointings around a bright, compact calibrator is observed, with the
+pointings around a bright, unresolved calibrator is observed, with the
 mosaic spacings approximately equal to the expected PB half-width at
 half maximum (HWHM) of the array elements. Self-calibration
 \citep{pr84} is used to derive relative per-element gains for the
@@ -132,8 +148,8 @@ sizes and polarization-based pointing offsets in the ATA
 %%%%%
 \section{Observations}\label{s.observations}
 
-Measurements of PB shape and squint were obtained by
-weekly observations of bright, compact sources from 2009~Oct~17 to
+Measurements of PB shape and squint were obtained by weekly
+observations of bright, unresolved sources from 2009~Oct~17 to
 2011~Apr~06. The core observing pattern in each session consisted of
 an observation pointed directly at the source followed by a small
 mosaic of pointings offset from the source by an angle comparable to
