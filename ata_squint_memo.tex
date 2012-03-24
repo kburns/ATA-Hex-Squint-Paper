@@ -377,6 +377,118 @@ squint scaling across feed revisions.
 \end{figure}
 
 %%%%%
+\section{Assessing the Impact of Uncorrected Squint}\label{s.impact}
+
+Polarization squints have an antenna- and direction-dependent effect
+upon the interferometer response, which means that they cannot be
+corrected using traditional scalar antenna gain calibration or purely
+in the image domain. Although several systems have been developed that
+can correct for squint and other such effects, including the
+$A$-projection algorithm \citep{bcgu08} and the MeqTrees system
+\citep{ns10}, their use is not yet widespread. In this section, we
+investigate the impact of \textit{un}corrected squint upon typical
+imaging applications.
+
+One way to do so is to compare image dynamic ranges (DRs). We
+simulated visibility data with varying squint properties, used
+standard techniques to create images, and examined the deconvolution
+residuals. The data were simulated using a custom program built on the
+\textsf{miriad-python} toolkit (\textbf{cite mirpy}). We simulated a
+typical 5~hr ATA observation of an artificial field containing 20
+unresolved sources in random locations throughout the FOV. We
+generated four variant datasets. In the first, no further effects were
+applied. In the next, the frequency-dependent size of the PB was taken
+into account. In the third, both that effect and typical ATA
+polarization squints were simulated, drawing the squint magnitudes
+from a distribution ranging from 50 to 500~arcsec and orienting the
+squint vectors randomly. In all cases, the data had no noise or gain
+calibration errors inserted, and the PB was modeled analytically as a
+circular Gaussian with a FWHM of $3.5\degr / f_\textrm{GHz}$
+\citep{Harp2011}. We found that in the ``ideal'' case, the limiting
+factor in the imaging step was the image pixelization \citep{cu08}, so
+for comparison we generated a fourth dataset in which the source
+positions were adjusted to land precisely in the center of the nearest
+pixel. We imaged the data using CASA \citep{thecasa}, deconvolving the
+images with 2500 iterations of the H\"ogbom CLEAN algorithm in CASA's
+``widefield'' mode.
+
+In Figure~\ref{fig.squintsims} we show representative subsections of
+the resulting images. A general increase in the residuals is apparent
+as the simulated data violate progressively more of the assumptions
+used in grid-and-FFT imaging. We compute DRs by dividing the
+\textit{total} flux in the image (10.49~Jy) by the rms deconvolution
+residual in the image subsections. Note that, given the lack of
+simulated noise in the visibility data, the absolute scale of the
+residuals is not meaningful. Compared to the standard case of
+randomly-positioned sources, simulating the frequency dependence of
+the PB decreases the DR by a factor of 1.6. Simulating ATA-scale
+squints decreases the DR by an additional factor of 2.7. Aligning the
+inserted sources with the pixel grid increases the DR by a factor of
+2.4. While this last technique is of course not generically applicable
+to real data, our results underscore the value of the ``AutoCenter''
+technique described by \citet{cu08}, a precursor of which is used by
+the NRAO VLA Sky Survey \citep{thenvss}. We note that even though the
+Cotton-Schwab CLEAN algorithm \citep{cbb99} subtracts sources in the
+visibility domain, it still uses pixelized CLEAN component coordinates
+and so can still limit the DR of a sensitive image.
+
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{images/squintsims}
+\caption{Representative subsections of deconvolved images generated
+  from simulated ATA data with various squint effects applied. The
+  color scale is set to emphasize the residuals. See \S\ref{s.impact}
+  for details. \textit{Top left panel:} the data are ``ideal'', and
+  the source locations are adjusted to fall on pixel centers. Dynamic
+  range is 115,000. \textit{Top right:} the source locations are truly
+  random, and are not adjusted to pixel centers. Dynamic range is
+  48,000. \textit{Bottom left:} source locations are not adjusted and
+  the frequency dependence of the PB size has been taken into account
+  in simulating the data. Dynamic range is 30,000. \textit{Bottom
+    right:} source locations are not adjusted, PB size is frequency
+  dependent, and ATA-type polarization squints have been
+  simulated. Dynamic range is 11,000.
+  \label{fig.squintsims}}
+\end{center}
+\end{figure}
+
+We also investigated the impact of uncorrected squint upon
+photometry. Using the same techniques described above, we simulated
+and imaged 400 ten-minute ATA datasets, each with 20 randomly placed
+unresolved sources. Half of these included no nonideal effects
+(analogous to the top right panel of Figure~\ref{fig.squintsims}) and
+half included PB frequency dependence and random ATA-scale squints
+(analogous to the bottom right panel). We then measured source flux
+densities by fitting 2D Gaussian profiles to each source, initializing
+each fit with the true source parameters as used to generate the
+data. For each source we computed $r \equiv \log_{10}(S_\textrm{fit} /
+S_\textrm{true})$, the logarithm of the ratio of the fitted source
+flux density to the flux density as inserted into the visibility data.
+
+In Figure~\ref{fig.sqfluxsim} we show histograms of $r$ for the two
+cases. In the ideal case, the fluxes are recovered to high precision,
+with the median $r = 0.001$. All errors are within 1.3$\sigma$ of the
+formal fit uncertainty, as anchored to the fit residual rms; this
+improbably small scatter, given the number of samples, is reflective
+of the fact that the only errors to which the measurement is subject
+are systematic effects in the imaging process. (The relatively large
+values of $|r|$ derive from DR-limited measurements of faint sources.)
+The median $r$ for the squinted data is -0.019, corresponding to a
+typical 4\% flux underestimate. The scatter in $r$ is much higher,
+with an interquartile range of 0.027.
+
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{images/sqfluxsim}
+\caption{Probability density functions (PDFs) for flux errors in data
+  with corrected and uncorrected squint effects. See \S\ref{s.impact}
+  for details.
+  \label{fig.sqfluxsim}}
+\end{center}
+\end{figure}
+
+
+%%%%%
 \section{Conclusions}\label{s.conclusions}
 What did we learn?
 

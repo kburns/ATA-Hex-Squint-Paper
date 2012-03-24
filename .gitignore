@@ -1,9 +1,9 @@
 *~
-*.aux
-*.bbl
-*.blg
-*.log
-*.out
-*.pdf
-*.toc
+/*.aux
+/*.bbl
+/*.blg
+/*.log
+/*.out
+/*.pdf
+/*.toc
 stage2
